@@ -1,0 +1,14 @@
+services:
+        web-node:
+                build: ./node
+        web-go:
+                build: ./go
+        redis:
+                image: redis
+        nginx:
+                image: nginx
+                volumes:
+                        - ./nginx/conf.d:/etc/nginx/conf.d
+                        - ./nginx/html:/usr/share/nginx/html
+                ports:
+                        - "80:80"
