@@ -30,7 +30,7 @@ class Test(HttpUser):
         tx = ''.join(random.choices(string.ascii_letters + string.digits, k=ln)) + "="
         self.client.get("/go/sha256?sha=%s" % tx, name="/go/sha256")
 
-    @task
+    @task(1)
     def task5(self):
         ln = random.randint(8, 50)
         tx = ''.join(random.choices(string.ascii_letters + string.digits, k=ln))
@@ -38,11 +38,19 @@ class Test(HttpUser):
         res = json.loads(res)
         self.client.get("/node/sha256?sha=%s" % res["result"], name="/node/sha256")
 
-    @task
+    @task(1)
     def task6(self):
         ln = random.randint(8, 50)
         tx = ''.join(random.choices(string.ascii_letters + string.digits, k=ln))
         res =  self.client.post("/go/sha256", {"str": tx}).text
         res = json.loads(res)
         self.client.get("/go/sha256?sha=%s" % res["result"], name="/go/sha256")
+
+    @task(0)
+    def task7(self):
+        ln = random.randint(8, 50)
+        tx = ''.join(random.choices(string.ascii_letters + string.digits, k=ln))
+        res =  self.client.post("/sha", {"str": tx}).text
+        res = json.loads(res)
+        self.client.get("/sha?sha=%s" % res["result"], name="/sha")
 

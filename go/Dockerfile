@@ -3,9 +3,11 @@ FROM golang AS builder
 
 WORKDIR /app
 
-COPY . .
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
 
-RUN go get -d
+COPY . .
 RUN CGO_ENABLED=0 go build server.go
 
 
@@ -16,5 +18,5 @@ WORKDIR /app
 
 COPY --from=builder /app/server .
 
-EXPOSE 8080
+EXPOSE 8090
 CMD ["/app/server"]

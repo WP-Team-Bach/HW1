@@ -28,7 +28,7 @@ func main() {
 	r.GET("/sha256", GetHandler)
 	r.NoRoute(NotFoundHandler)
 
-	r.Run(":8080")
+	r.Run(":8090")
 }
 
 func PutHandler(c *gin.Context) {
