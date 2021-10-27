@@ -1,12 +1,19 @@
 services:
-        web-node:
-                build: ./node
-        web-go:
-                build: ./go
         redis:
                 image: redis
+        web-node:
+                build: ./node
+                depends_on:
+                        - redis
+        web-go:
+                build: ./go
+                depends_on:
+                        - redis
         nginx:
                 image: nginx
+                depends_on:
+                        - web-node
+                        - web-go
                 volumes:
                         - ./nginx/conf.d:/etc/nginx/conf.d
                         - ./nginx/html:/usr/share/nginx/html

@@ -10,7 +10,7 @@ RUN CGO_ENABLED=0 go build server.go
 
 
 #
-FROM alpine
+FROM scratch
 
 WORKDIR /app
 
